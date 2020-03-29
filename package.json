@@ -13,7 +13,8 @@
     "build-babel": "babel src --out-dir dist --ignore spec.js,node_modules,dist,tests",
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
     "build": "npm run clean && npm run build-babel",
-    "serve": "node dist/index.js"
+    "serve": "node dist/index.js",
+    "deploy-to-heroku": "git push heroku master"
   },
   "keywords": [
     "rung",
