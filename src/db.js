@@ -9,7 +9,7 @@ const connectToDb = async config => {
   const password = config.password || "";
   const url = `mongodb://${userName}:${password}@${dbHost}:${dbPort}/${dbName}`;
   try {
-    Mongoose.set("useFindAndMdify", false);
+    Mongoose.set("useFindAndModify", false);
     Mongoose.set("useCreateIndex", true);
     await Mongoose.connect(url, {
       useNewUrlParser: true,

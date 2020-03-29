@@ -20,7 +20,7 @@ const init = async config => {
   });
 
   Object.keys(routes).forEach(path => {
-    app.use(path, routes[path])
+    app.use(path, routes[path]())
   });
   return app;
 };

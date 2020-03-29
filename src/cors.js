@@ -1,7 +1,8 @@
 import cors from "cors";
 
 const localApps = {
-  "http://localhost:8080": true
+  "http://localhost:8080": true,
+  "https://rungfrontend.herokuapp.com/": true
 };
 
 const getWhiteList = () => {

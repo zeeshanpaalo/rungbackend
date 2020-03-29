@@ -30,7 +30,9 @@ const handlerAttached = Object.keys(routes).reduce((processedRoutes, key) => {
   const registerRoute = (applicationContext, ...args) => routerRegister(router, applicationContext, ...args);
   return {
     ...processedRoutes,
-    [key]: applicationContext => routeHandler((...args) => registerRoute(applicationContext, ...args))
+    [key]: applicationContext => routeHandler((...args) => {
+      return registerRoute(applicationContext, ...args)
+    })
   };
 }, {});
 
