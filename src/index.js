@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import initApp from "./app";
 import "./env";
 
