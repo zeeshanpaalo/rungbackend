@@ -14,7 +14,7 @@ process.on("uncaughtException", err => {
   console.log(err);
 })
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 initApp(config).then(app => {
   app.listen(port, () => console.log(`Listening on port ${port}`))
 })
