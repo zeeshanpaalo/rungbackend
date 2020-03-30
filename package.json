@@ -25,13 +25,16 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bcrypt": "^3.0.3",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "minimist": "^1.2.0",
     "mongoose": "^5.9.6",
     "path-to-regexp": "3.0.0",
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

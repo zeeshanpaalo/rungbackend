@@ -1,9 +1,9 @@
-import { isError, isUnhandledError } from "../helpers";
+import { isError, isUnHandledError } from "../helpers";
 
 const sendSuccessJSON = (res, json) => res.send(json);
 
 const sendError = (req, res, error) => {
-  if (!isUnhandledError(error)) {
+  if (isUnHandledError(error)) {
     console.log("This is an Unhandled Error");
   }
   const httpCode = error.getHTTPCode && error.getHTTPCode();
