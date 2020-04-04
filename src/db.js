@@ -7,7 +7,9 @@ const connectToDb = async config => {
   const dbName = config.dbName || "testdb";
   const userName = config.userName || "";
   const password = config.password || "";
-  const url = `mongodb://${userName}:${password}@${dbHost}:${dbPort}/${dbName}`;
+  // const url = `mongodb://${userName}:${password}@${dbHost}:${dbPort}/${dbName}`;
+  const url = "mongodb://paalo:abc123@ds151943.mlab.com:51943/rung"
+  console.log(url);
   try {
     Mongoose.set("useFindAndModify", false);
     Mongoose.set("useCreateIndex", true);
