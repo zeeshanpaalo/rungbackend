@@ -14,7 +14,7 @@
     "start_babel": "babel-node ./index.js --preset=babel-preset-es2015",
     "build": "npm run clean && npm run build-babel",
     "serve": "node dist/index.js",
-    "deploy-to-heroku": "git push heroku master",
+    "deploy": "git push heroku master",
     "faheem-function": "node src/helpers/cards.js"
   },
   "keywords": [
