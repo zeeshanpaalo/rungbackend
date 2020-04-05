@@ -1,6 +1,6 @@
 {
-  "dbHost": "localhost",
-  "dbPort": "27017",
+  "dbHost": "ds151943.mlab.com",
+  "dbPort": "51943",
   "dbName": "rung",
   "db_userName": "paalo",
   "db_password": "abc123"
