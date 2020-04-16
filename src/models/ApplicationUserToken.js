@@ -4,7 +4,8 @@ const { ObjectId } = Schema.Types;
 
 const ApplicationUser = new Schema({
   userId: ObjectId,
-  token: String
+  token: String,
+  expiresAt: Date
 });
 
 export default Mongoose.model("ApplicationUserToken", ApplicationUser, "applicationUserTokens")

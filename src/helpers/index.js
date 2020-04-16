@@ -1,3 +1,4 @@
+import moment from "moment";
 import { HTTPError } from "../constants/errors";
 import ApplicationUserToken from "../models/ApplicationUserToken";
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +17,8 @@ export const generateAuthorizationToken = async (
   maxNumberOfMinutes,
   req
 ) => {
-  const userToken = new ApplicationUserToken({ userId: existingUser._id, token: uuidv4() })
+  const userToken = new ApplicationUserToken(
+    { userId: existingUser._id, token: uuidv4(), expiresAt: moment().add(maxNumberOfMinutes, "m") }
+  )
   return userToken.save().then(doc => doc);
 }

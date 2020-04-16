@@ -79,6 +79,11 @@ export const NOT_EXIST = new HTTPError(
   404,
   "Desired Data Not Exist"
 );
+export const NOT_LOGGED_IN = new HTTPError(
+  "NOT_LOGGED_IN",
+  404,
+  "User is not logged In"
+);
 
 export const POST_FAILED = new HTTPError("POST_FAILURE", 403, "Post failed");
 
@@ -89,6 +94,7 @@ export const INVALID_ID = INVALID_REQUEST.withUserMessage(
 );
 
 export default {
+  NOT_LOGGED_IN,
   INVALID_EMAIL,
   EMAIL_ALREADY_EXISTS,
   AUTHENTICATION_FAILED,
