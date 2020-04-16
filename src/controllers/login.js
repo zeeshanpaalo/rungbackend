@@ -1,14 +1,15 @@
 import bcrypt from "bcrypt";
 import { validate } from "email-validator";
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 // import parser from "ua-parser-js";
 import ApplicationUser from "../models/ApplicationUser";
-// import ApplicationUserToken from "../models/ApplicationUserToken";
+import ApplicationUserToken from "../models/ApplicationUserToken";
 import {
   INVALID_EMAIL,
   USER_NOT_EXISTS,
   INVALID_PASSWORD,
-  INVALID_REQUEST
+  INVALID_REQUEST,
+  NOT_LOGGED_IN
 } from "../constants/errors";
 import {
   COOKIE_AUTHENTICATION_KEY,
@@ -60,66 +61,36 @@ export const loginUser = (req, res) => {
     });
 };
 
-// export const checkToken = req => {
-//   const userId = req.context.getUserId();
-//   return ApplicationUserToken.findOne({
-//     userID: userId,
-//     expiresAt: {
-//       $gte: new Date()
-//     },
-//     token: req.cookies[COOKIE_AUTHENTICATION_KEY]
-//   }).then(usertoken => {
-//     if (!usertoken) {
-//       return {
-//         isLogin: false
-//       };
-//     }
-//     return ApplicationUser.findOne(
-//       {
-//         _id: mongoose.Types.ObjectId(userId)
-//       },
-//       {
-//         roleId: 1,
-//         typeId: 1,
-//         businessDomain: 1,
-//         isAdmin: 1,
-//         firstName: 1,
-//         lastName: 1
-//       }
-//     )
-//       .lean()
-//       .then(user => {
-//         const rolePromise = ApplicationRole.findOne(
-//           {
-//             _id: user.roleId
-//           },
-//           {
-//             _id: 0
-//           }
-//         ).exec();
-//         const typePromise = ApplicationUserType.findOne(
-//           {
-//             _id: user.typeId
-//           },
-//           {
-//             _id: 0
-//           }
-//         ).exec();
-
-//         return Promise.all([rolePromise, typePromise]).then(results => {
-//           return {
-//             isLogin: true,
-//             isAdmin: user.isAdmin,
-//             roleId: user.roleId,
-//             role: results[0].name,
-//             type: results[1].name,
-//             ...user
-//           };
-//         });
-//       });
-//   });
-// };
+export const loginCheck = req => {
+  return ApplicationUserToken.findOne({
+    expiresAt: {
+      $gte: new Date()
+    },
+    token: req.cookies[COOKIE_AUTHENTICATION_KEY]
+  })
+    .lean()
+    .then(usertoken => {
+      if (!usertoken) {
+        return NOT_LOGGED_IN.withUserMessage(
+          "User is not LoggedIn"
+        ).throwPromise();
+      }
+      return ApplicationUser.findOne(
+        {
+          _id: mongoose.Types.ObjectId(usertoken.userId)
+        }
+      )
+        .lean()
+        .then(user => {
+          return {
+            isLoggedIn: true,
+            ...user
+          };
+        });
+    });
+};
 
 export default {
-  loginUser
+  loginUser,
+  loginCheck
 };
