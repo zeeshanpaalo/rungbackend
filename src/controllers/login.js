@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import { validate } from "email-validator";
 import mongoose from "mongoose";
-// import parser from "ua-parser-js";
 import ApplicationUser from "../models/ApplicationUser";
 import ApplicationUserToken from "../models/ApplicationUserToken";
 import {
@@ -15,34 +14,29 @@ import {
   COOKIE_AUTHENTICATION_KEY,
   ONE_YEAR_TOKEN_VALIDITY
 } from "../constants";
-// import { LOGIN_FAILURE, LOGIN_SUCCESS } from "../constants/activityNames";
-// import { CUSTOMER } from "../constants/objectTypes";
-// import ApplicationRole from "../models/ApplicationRole";
-// import ApplicationUserType from "../models/ApplicationUserType";
 import { generateAuthorizationToken } from "../helpers/index";
-// import { saveAuditTrailLog } from "../services/auditTrail";
 
 export const loginUser = (req, res) => {
   const body = { ...req.body };
   if (!validate(body.email)) {
     return INVALID_EMAIL.throwPromise();
   }
-  if (!body.password) {
-    return INVALID_REQUEST.throwPromise();
-  }
-  return ApplicationUser.findOne({
-    email: body.email
-  })
-    .select(
-      "_id password firstName lastName"
-    )
+  return ApplicationUser.findOneAndUpdate(
+    {
+      userID: body.userID
+    },
+    {
+      userID: body.userID, email: body.email, name: body.name, picUrl: body.picUrl
+    },
+    { upsert: true, new: true }
+  )
+    .lean()
     .then(async existingUser => {
-      if (!existingUser) return USER_NOT_EXISTS.throwPromise();
-      if (!bcrypt.compareSync(body.password, existingUser.password)) {
-        return INVALID_PASSWORD.withUserMessage(
-          "password wrong"
+      if (!existingUser) {
+        return USER_NOT_EXISTS.withUserMessage(
+          "User Not Found"
         ).throwPromise();
-      }
+      };
       const maxNumberOfMinutes = ONE_YEAR_TOKEN_VALIDITY;
       const userToken = await generateAuthorizationToken(
         existingUser,
@@ -56,7 +50,6 @@ export const loginUser = (req, res) => {
         domain: req.hostname
       };
       res.cookie(COOKIE_AUTHENTICATION_KEY, userToken.token, options);
-
       return existingUser
     });
 };
@@ -80,12 +73,11 @@ export const loginCheck = req => {
           _id: mongoose.Types.ObjectId(usertoken.userId)
         }
       )
-        .lean()
+        .select(
+          "_id name email picUrl userID"
+        )
         .then(user => {
-          return {
-            isLoggedIn: true,
-            ...user
-          };
+          return user
         });
     });
 };

@@ -2,10 +2,10 @@ import Mongoose from 'mongoose';
 const Schema = Mongoose.Schema;
 
 const ApplicationUser = new Schema({
-  firstName: String,
-  lastName: String,
+  name: String,
   email: { type: String, unique: true },
-  password: String
+  picUrl: String,
+  userID: String
 });
 
 export default Mongoose.model("ApplicationUser", ApplicationUser, "applicationUsers")
