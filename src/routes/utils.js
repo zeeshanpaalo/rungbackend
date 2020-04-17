@@ -10,7 +10,7 @@ const sendError = (req, res, error) => {
   if (httpCode) {
     return error.send(res);
   }
-  console.log("is a 500 Error");
+  console.log("is a 500 Error", error);
   return res.status(500).send({ error });
 }
 
