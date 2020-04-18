@@ -1,11 +1,13 @@
 import express from "express";
 
 import login from "./login";
+import logout from "./logout";
 
 import { requestHandler } from "./utils";
 
 const routes = {
-  "/login": login
+  "/login": login,
+  "/logout": logout
 };
 
 const routerRegister = (router, applicationContext, method, path, cb) => {
