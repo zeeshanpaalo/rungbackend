@@ -3,7 +3,7 @@ const Schema = Mongoose.Schema;
 
 const ApplicationUser = new Schema({
   name: String,
-  email: { type: String, unique: true },
+  email: String,
   picUrl: String,
   userID: String
 });
