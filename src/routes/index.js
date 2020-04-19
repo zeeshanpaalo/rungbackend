@@ -2,12 +2,14 @@ import express from "express";
 
 import login from "./login";
 import logout from "./logout";
+import rooms from "./rooms";
 
 import { requestHandler } from "./utils";
 
 const routes = {
   "/login": login,
-  "/logout": logout
+  "/logout": logout,
+  "/rooms": rooms,
 };
 
 const routerRegister = (router, applicationContext, method, path, cb) => {

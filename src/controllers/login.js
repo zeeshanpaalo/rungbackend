@@ -18,7 +18,7 @@ import { generateAuthorizationToken } from "../helpers/index";
 
 export const loginUser = (req, res) => {
   const body = { ...req.body };
-  if (!validate(body.email)) {
+  if (body.email && !validate(body.email)) {
     return INVALID_EMAIL.throwPromise();
   }
   return ApplicationUser.findOneAndUpdate(
