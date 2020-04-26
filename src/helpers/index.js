@@ -22,3 +22,31 @@ export const generateAuthorizationToken = async (
   )
   return userToken.save().then(doc => doc);
 }
+
+const fisherYatesShuffle = (array) => {
+  const arr = { ...array };
+  let currentIndex = arr.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return arr;
+}
+const randomNumber = () => {
+  const n = Math.floor(Math.random() * Math.floor(2)); // generates 0 or 1
+  if (n === 0) {
+    return "A";
+  } else {
+    return "B"
+  }
+}
+export const generateRandomTeam = (players) => {
+  const shuffledPlayers = fisherYatesShuffle(players);
+  return shuffledPlayers.map((p, i) => {
+    return { ...p, position: i * 90 }
+  })
+}
