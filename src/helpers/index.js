@@ -23,15 +23,15 @@ export const generateAuthorizationToken = async (
   return userToken.save().then(doc => doc);
 }
 
-const fisherYatesShuffle = (array) => {
-  const arr = { ...array };
+export const fisherYatesShuffle = (array) => {
+  let arr = [ ...array ];
   let currentIndex = arr.length, temporaryValue, randomIndex;
   while (0 !== currentIndex) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
   }
 
   return arr;
