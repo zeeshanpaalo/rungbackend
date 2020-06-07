@@ -8,7 +8,8 @@ const Room = new Schema({
   lastRungSelector: ObjectId,
   ready: {type: Boolean, default: false},
   color: { type : String, enum: ["HEARTS", "DIAMONDS", "SPADES", "CLUBS", null]},
-  currentTurn: ObjectId
+  currentTurn: ObjectId,
+  track: []
 });
 
 export default Mongoose.model("Room", Room, "rooms")

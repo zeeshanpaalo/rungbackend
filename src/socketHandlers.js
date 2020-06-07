@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import Room from "./models/Room";
 import ApplicationUser from "./models/ApplicationUser";
-import { joinRoomAction, socketConnectionSucess, updatedRoomsEvent, leftRoom, selectRung } from "./action";
+import { joinRoomAction, socketConnectionSucess, updatedRoomsEvent, leftRoom, selectRung, throwCard } from "./action";
 import { fisherYatesShuffle } from "./helpers/index";
+import { getNextTurn } from "./helpers/getNextTurn";
 
 const { ObjectId } = mongoose.Types;
 
@@ -67,6 +68,25 @@ const registerEvents = io => {
           {new: true, lean: true}
         );
       io.in(socket.roomId).emit(selectRung.success, room); // broadcast in room including the sender
+    })
+
+    // action listener for Throw Card
+    socket.on(throwCard.begin, async data => {
+      const { card, whoThrew } = data;
+      console.log(card, whoThrew);
+      // right Here: "the function getNextTurn() will give next Player for Turn and any event to be "
+      const nextPlayerId = await getNextTurn(socket.roomId, card, whoThrew);
+      console.log(nextPlayerId);
+      const room = await Room.findOneAndUpdate(
+        { _id: ObjectId(socket.roomId) },
+        {
+          $set: {
+            currentTurn: ObjectId(nextPlayerId),
+          }
+        },
+        { new: true, lean: true }
+      );
+      io.in(socket.roomId).emit(throwCard.success, room); // broadcast in room including the sender
     })
 
     socket.on('disconnect', async () => {
