@@ -8,8 +8,13 @@ export const selectRung = {
   success: "SELECT_RUNG_SUCCESS",
   error: "SELECT_RUNG_ERROR"
 }
+export const throwCard = {
+  begin: "THROW_CARD_BEGIN",
+  success: "THROW_CARD_SUCCESS",
+  error: "THROW_CARD_ERROR"
+}
 export const leftRoom = "LEFT_ROOM";
 export const socketConnectionSucess = "CONNECT_TO_SOCKET_SUCCESS";
 export const updatedRoomsEvent = "ROOMS_UPDATED";
 
-export default { joinRoomAction, socketConnectionSucess, updatedRoomsEvent, leftRoom, selectRung };
+export default { joinRoomAction, socketConnectionSucess, updatedRoomsEvent, leftRoom, selectRung, throwCard };
